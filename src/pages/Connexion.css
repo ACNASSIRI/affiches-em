@@ -1,0 +1,230 @@
+/* ==========================================================================
+   Ecran de connexion — « Cockpit » aux couleurs Marjane
+   Panneau bleu nuit (marque, accroche, signature) a gauche, formulaire a
+   droite. Sur telephone, le panneau passe au-dessus et se resserre.
+   ========================================================================== */
+
+.connexion {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(380px, 560px) minmax(0, 1fr);
+  background: var(--surface);
+}
+
+/* --- Panneau de gauche ---------------------------------------------------- */
+
+.connexion__panneau {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 56px;
+  background: var(--panel);
+  color: var(--ink-inverse-soft);
+}
+
+.connexion__marque {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.connexion__marque svg {
+  flex: none;
+  border-radius: 12px;
+}
+
+.connexion__marque-texte {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.connexion__marque-nom {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink-inverse);
+}
+
+.connexion__marque-lieu {
+  font-size: 13px;
+  color: #93a8c6;
+}
+
+.connexion__accroche-bloc {
+  margin-top: auto;
+}
+
+.connexion__titre {
+  font-size: clamp(2rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ink-inverse);
+  max-width: 14ch;
+}
+
+.connexion__accroche {
+  margin-top: 18px;
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 40ch;
+}
+
+.signature--connexion {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-panel);
+}
+
+.signature--connexion .signature__intro {
+  font-size: 12px;
+}
+
+.signature--connexion .signature__nom {
+  font-size: 18px;
+}
+
+.signature--connexion .signature__fonction,
+.signature--connexion .signature__email {
+  font-size: 14px;
+}
+
+/* --- Formulaire ----------------------------------------------------------- */
+
+.connexion__zone {
+  display: grid;
+  place-items: center;
+  padding: 48px 32px;
+}
+
+.connexion__formulaire {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.connexion__carte-titre {
+  font-size: 1.625rem;
+  font-weight: 700;
+}
+
+.connexion__carte-texte {
+  margin-top: 6px;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.connexion__alerte {
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: #fff8d6;
+  border: 1px solid #f2dc6b;
+  font-size: var(--text-xs);
+  color: #5c4a00;
+  line-height: 1.5;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.champ label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.connexion__facultatif {
+  margin-left: 4px;
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+
+.champ input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-sunken);
+  font-size: var(--text-base);
+  transition: border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+}
+
+.champ input:focus {
+  border-color: var(--brand-blue);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px var(--brand-blue-wash);
+  outline: none;
+}
+
+.champ input:disabled {
+  opacity: 0.7;
+}
+
+.connexion__erreur {
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: #fdeceb;
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  color: var(--danger);
+}
+
+.connexion__bouton {
+  padding: 14px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--brand-blue);
+  color: #ffffff;
+  font-size: var(--text-base);
+  font-weight: 600;
+  transition: background var(--duration) var(--ease);
+}
+
+.connexion__bouton:hover:not(:disabled) {
+  background: var(--brand-blue-deep);
+}
+
+.connexion__bouton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.connexion__aide {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+/* --- Telephone ------------------------------------------------------------ */
+
+@media (max-width: 860px) {
+  .connexion {
+    grid-template-columns: 1fr;
+  }
+
+  .connexion__panneau {
+    gap: 20px;
+    padding: 24px 20px;
+  }
+
+  .connexion__titre {
+    font-size: 1.6rem;
+  }
+
+  .connexion__accroche {
+    display: none;
+  }
+
+  .connexion__zone {
+    padding: 28px 20px 40px;
+  }
+
+  /* La signature reste visible, sous le formulaire. */
+  .signature--connexion {
+    order: 3;
+    padding-top: 16px;
+  }
+}

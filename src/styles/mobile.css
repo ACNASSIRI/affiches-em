@@ -1,0 +1,215 @@
+/* ==========================================================================
+   AFFICHES-EM v1.0 — Adaptation telephone et tablette
+   --------------------------------------------------------------------------
+   Charge en dernier (main.tsx) : ces regles priment sur celles des pages.
+   ========================================================================== */
+
+/* --- Tablette et telephone : le menu lateral devient un bandeau --------- */
+@media (max-width: 960px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .shell__sidebar {
+    min-width: 0;
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding: 12px 12px 0;
+  }
+
+  .shell__brand {
+    padding: 0 4px 12px;
+  }
+
+  /* Menu sur une ligne, que l'on fait defiler du doigt. */
+  .shell__nav {
+    flex-direction: row;
+    gap: 4px;
+    padding: 8px 0 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .shell__nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .shell__nav-groupe {
+    flex-direction: row;
+    gap: 4px;
+  }
+
+  .shell__nav-section,
+  .signature--menu {
+    display: none;
+  }
+
+  .shell__nav-link {
+    flex: none;
+    white-space: nowrap;
+    min-height: 40px;
+  }
+
+  .shell__nav-link--active,
+  .shell__nav-link--active:hover {
+    box-shadow: inset 0 -3px 0 var(--brand-yellow);
+  }
+
+  .shell__topbar {
+    position: static;
+    padding: 14px 16px;
+  }
+
+  .shell__title {
+    font-size: 1.25rem;
+  }
+
+  /* Titre et compte sur la meme ligne, boutons de la page en dessous. */
+  .shell__titles {
+    flex: 1 1 0;
+  }
+
+  .shell__compte {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .shell__actions {
+    order: 3;
+    width: 100%;
+  }
+
+  .shell__actions > .bouton,
+  .shell__actions > a.bouton {
+    flex: 1 1 auto;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .shell__content {
+    padding: 16px 16px 24px;
+    max-width: 100%;
+  }
+
+  /* La signature passe en pied de page. */
+  .shell__pied {
+    display: block;
+    padding: 18px 16px 24px;
+    background: var(--panel);
+  }
+
+  .carte {
+    padding: var(--space-4);
+  }
+}
+
+/* --- Telephone ------------------------------------------------------------ */
+@media (max-width: 640px) {
+  .shell__compte-infos,
+  .shell__brand-version {
+    display: none;
+  }
+
+  /* Boutons et champs faciles a toucher. */
+  .bouton {
+    min-height: 40px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px; /* evite le zoom automatique de Safari iOS */
+  }
+
+  /* En-tetes de carte : titre puis actions. */
+  .carte__entete {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .carte__entete .recherche,
+  .carte__entete input[type='search'] {
+    width: 100%;
+  }
+
+  /* Tableaux : une fiche par ligne, chaque valeur precedee de son titre. */
+  table.tableau,
+  .tableau tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .tableau thead {
+    display: none;
+  }
+
+  .tableau tbody tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .tableau tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .tableau tbody td,
+  .tableau tbody th {
+    display: block;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* L'identifiant de la ligne (code, nom) sert de titre de fiche. */
+  .tableau tbody th[scope='row'] {
+    grid-column: 1 / -1;
+    font-size: var(--text-base);
+  }
+
+  .tableau tbody td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 2px;
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: var(--weight-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* Boutons d'action : sur toute la largeur, sans titre. */
+  .tableau tbody td.colonne-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tableau tbody td.colonne-actions::before {
+    display: none;
+  }
+
+  .tableau tbody td.colonne-actions > * {
+    flex: 1 1 auto;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .colonne-actions .bouton + .bouton {
+    margin-left: 0;
+  }
+
+  /* Zone d'apercu des affiches : pas de debordement horizontal. */
+  .impression-apercu {
+    justify-content: center;
+  }
+}

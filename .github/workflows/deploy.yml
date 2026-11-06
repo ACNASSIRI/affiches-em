@@ -1,0 +1,75 @@
+name: Deploiement GitHub Pages
+
+# Se declenche a chaque envoi de code sur la branche principale,
+# et peut aussi etre lance manuellement depuis l'onglet Actions.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Permissions minimales necessaires a la publication sur Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Une seule publication a la fois. Les executions en attente sont annulees,
+# mais une publication en cours va toujours a son terme.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # 1. Compilation
+  # ---------------------------------------------------------------------------
+  build:
+    name: Compilation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Recuperation du code
+        uses: actions/checkout@v4
+
+      - name: Installation de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          
+      - name: Installation des dependances
+        run: npm install --no-audit --no-fund
+
+      - name: Compilation
+        # Les pages sont servies par GitHub ; les donnees (comptes, articles,
+        # campagnes, logos) restent sur le serveur PocketBase du VPS.
+        # Pour changer de serveur : Settings > Secrets and variables > Actions >
+        # Variables > VITE_PB_URL.
+        run: npx vite build
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}/
+          VITE_PB_URL: ${{ vars.VITE_PB_URL || 'https://149-56-212-53.sslip.io' }}
+
+      - name: Configuration de Pages
+        uses: actions/configure-pages@v5
+
+      - name: Envoi du resultat
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  # ---------------------------------------------------------------------------
+  # 2. Publication
+  # ---------------------------------------------------------------------------
+  deploy:
+    name: Publication
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Publication sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

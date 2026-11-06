@@ -1,0 +1,12 @@
+# AFFICHES-EM — parametres de deploiement (lus par DEPLOYER.bat)
+# Remplacez les trois valeurs ci-dessous, sans espaces autour du signe =.
+
+# Adresse IP du VPS (fournie par l'hebergeur), ex. 51.68.12.34
+IP_VPS=149.56.212.53
+
+# Utilisateur SSH (root chez la plupart des hebergeurs, ubuntu chez OVH)
+UTILISATEUR=ubuntu
+
+# Nom de domaine : laissez vide. Le site sera alors https://51-68-12-34.sslip.io
+# (adresse gratuite deduite de l'IP, avec HTTPS automatique).
+DOMAINE=

@@ -1,0 +1,156 @@
+/* ==========================================================================
+   AFFICHES-EM — Theme clair et moderne
+   --------------------------------------------------------------------------
+   Charge en dernier (main.tsx). Harmonise les elements partages par toutes
+   les pages (cartes, boutons, champs, tableaux) sans modifier leurs feuilles
+   de style d'origine. Ne touche jamais aux affiches (.affiche-*, .planche*).
+   ========================================================================== */
+
+/* --- Cartes -------------------------------------------------------------- */
+
+.carte {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+  padding: var(--space-6);
+}
+
+/* Titres de carte en casse normale : plus lisibles que les petites capitales. */
+.carte__titre {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.carte--verification.est-attente,
+.carte--session,
+.carte--verification.est-ok {
+  border-left-width: 1px;
+  box-shadow: inset 3px 0 0 var(--brand-yellow);
+}
+
+.carte--verification.est-ok,
+.carte--session {
+  box-shadow: inset 3px 0 0 var(--ok);
+}
+
+/* --- Boutons ------------------------------------------------------------- */
+
+.bouton {
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.bouton--petit {
+  padding: 6px 10px;
+}
+
+.bouton--principal {
+  background: var(--brand-blue);
+  color: #fff;
+  box-shadow: 0 1px 0 rgba(23, 32, 51, 0.08);
+}
+
+.bouton--principal:hover:not(:disabled) {
+  background: var(--brand-blue-deep);
+}
+
+.bouton--discret {
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+}
+
+.bouton--discret:hover:not(:disabled) {
+  border-color: var(--brand-blue);
+  color: var(--brand-blue);
+  background: var(--brand-blue-wash);
+}
+
+/* --- Champs -------------------------------------------------------------- */
+
+.champ input,
+.champ select,
+.champ textarea,
+.recherche {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.champ input:focus,
+.champ select:focus,
+.champ textarea:focus,
+.recherche:focus {
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 3px var(--brand-blue-wash);
+  outline: none;
+}
+
+.champ label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+
+/* --- Tableaux ------------------------------------------------------------ */
+
+.tableau thead th {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-faint);
+  background: var(--surface-sunken);
+  border-bottom: 1px solid var(--line);
+}
+
+.tableau th,
+.tableau td {
+  padding: 10px 12px;
+}
+
+@media (hover: hover) and (min-width: 641px) {
+  .tableau tbody tr:hover td,
+  .tableau tbody tr:hover th {
+    background: var(--surface-sunken);
+  }
+}
+
+.tableau tbody th {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* --- Selection et focus -------------------------------------------------- */
+
+::selection {
+  background: var(--brand-blue-wash);
+  color: var(--brand-blue-deep);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-blue);
+  outline-offset: 2px;
+}
+
+body {
+  font-feature-settings: 'tnum' 1;
+}
+
+@media (max-width: 960px) {
+  .carte {
+    padding: var(--space-4);
+  }
+}

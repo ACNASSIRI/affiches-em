@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Affiches EM">
+  <rect width="180" height="180" rx="40" fill="#ffffff"/>
+  <path d="M28 66a8 8 0 0 1 8-8h80l36 32-36 32H36a8 8 0 0 1-8-8Z" fill="#004d9b"/>
+  <circle cx="120" cy="90" r="7" fill="#ffffff"/>
+  <text x="70" y="104" text-anchor="middle" font-family="'Archivo Narrow','Arial Narrow',Arial,sans-serif" font-weight="700" font-size="40" fill="#ffdd00">EM</text>
+</svg>

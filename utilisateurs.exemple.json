@@ -1,0 +1,22 @@
+{
+  "utilisateurs": [
+    {
+      "identifiant": "achraf",
+      "nom": "Achraf Nassiri",
+      "motDePasse": "ChangezMoi-2026",
+      "role": "administrateur"
+    },
+    {
+      "identifiant": "rayon51",
+      "nom": "Rayon Image & Son",
+      "motDePasse": "ChangezMoi-2026",
+      "role": "operateur"
+    },
+    {
+      "identifiant": "rayon54",
+      "nom": "Rayon Nouvelles Technologies",
+      "motDePasse": "ChangezMoi-2026",
+      "role": "operateur"
+    }
+  ]
+}
