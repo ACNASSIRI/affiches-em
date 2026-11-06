@@ -191,7 +191,7 @@ export function modeleDepuisChoix(
   operations: readonly GabaritOperation[],
 ): ModeleAffiche | null {
   if (!choix || choix === 'auto') return null;
-  if (choix === 'electro' || choix === 'nouvelles-technologies') return MODELES_INTEGRES[choix];
+  if (choix === 'electro' || choix === 'nouvelles-technologies' || choix === 'image-son') return MODELES_INTEGRES[choix];
   if (choix.startsWith(PREFIXE_OPERATION)) {
     const g = operations.find((o) => `${PREFIXE_OPERATION}${o.id}` === choix);
     return g ? versModele(g) : null;

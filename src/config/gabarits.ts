@@ -8,14 +8,14 @@
  *
  * Les deux gabarits integres partagent la meme mise en page ; seul le cadre
  * decoratif change (fond bleu « Electro », fond rose-violet « Nouvelles
- * technologies »). Des gabarits d'operation (ex. « Maison & Beaute a prix
+ * technologies » et « Image & Son », ce dernier avec un macaron TV). Des gabarits d'operation (ex. « Maison & Beaute a prix
  * legers ») peuvent etre ajoutes par un administrateur : voir
  * lib/gabarits-operation.ts.
  */
 
 import type { CategorieProduit } from './constants';
 
-export type Gabarit = 'electro' | 'nouvelles-technologies';
+export type Gabarit = 'electro' | 'nouvelles-technologies' | 'image-son';
 
 export interface DefinitionGabarit {
   readonly code: Gabarit;
@@ -34,16 +34,22 @@ export const GABARITS: Readonly<Record<Gabarit, DefinitionGabarit>> = {
   },
   'nouvelles-technologies': {
     code: 'nouvelles-technologies',
-    libelle: 'Nouvelles technologies (Image & Son)',
+    libelle: 'Nouvelles technologies',
     cadre: `${base}affiches/cadre-nouvelles-technologies.png`,
+  },
+  'image-son': {
+    code: 'image-son',
+    libelle: 'Image & Son',
+    cadre: `${base}affiches/cadre-image-son.png`,
   },
 } as const;
 
-export const GABARITS_ORDONNES: readonly Gabarit[] = ['electro', 'nouvelles-technologies'];
+export const GABARITS_ORDONNES: readonly Gabarit[] = ['electro', 'nouvelles-technologies', 'image-son'];
 
 /**
  * Gabarit retenu pour chaque categorie produit.
- * Image & Son, telephonie et informatique relevent des « Nouvelles technologies » ;
+ * Image & Son (TV, audio) a son propre cadre ; telephonie et informatique
+ * relevent des « Nouvelles technologies » ;
  * tout le reste (gros et petit electromenager, froid, lavage, cuisson) d'« Electro ».
  */
 export const GABARIT_PAR_CATEGORIE: Readonly<Record<CategorieProduit, Gabarit>> = {
@@ -52,7 +58,7 @@ export const GABARIT_PAR_CATEGORIE: Readonly<Record<CategorieProduit, Gabarit>> 
   cuisson: 'electro',
   froid: 'electro',
   lavage: 'electro',
-  'image-son': 'nouvelles-technologies',
+  'image-son': 'image-son',
   nt: 'nouvelles-technologies',
   telephonie: 'nouvelles-technologies',
   pc: 'nouvelles-technologies',
@@ -166,6 +172,14 @@ export const MODELES_INTEGRES: Readonly<Record<Gabarit, ModeleAffiche>> = {
     code: 'nouvelles-technologies',
     libelle: GABARITS['nouvelles-technologies'].libelle,
     cadreUrl: GABARITS['nouvelles-technologies'].cadre,
+    cadreFileId: null,
+    cadreDessus: true,
+    disposition: 'standard',
+  },
+  'image-son': {
+    code: 'image-son',
+    libelle: GABARITS['image-son'].libelle,
+    cadreUrl: GABARITS['image-son'].cadre,
     cadreFileId: null,
     cadreDessus: true,
     disposition: 'standard',

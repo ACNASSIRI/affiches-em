@@ -86,7 +86,7 @@ export function TableauDeBord() {
   const cles = useMemo(() => {
     const articlesElectro = articles.filter((a) => a.gabarit === 'electro').length;
     const affElectro = affiches.filter((a) => a.gabarit === 'electro').length;
-    const affNt = affiches.filter((a) => a.gabarit === 'nouvelles-technologies').length;
+    const affNt = affiches.filter((a) => a.gabarit && a.gabarit !== 'electro').length;
     return {
       marques: marques.length,
       marquesActives: marques.filter((m) => m.actif).length,
@@ -186,7 +186,7 @@ export function TableauDeBord() {
           <span className="tuile__valeur">{chargement ? '…' : nombre(cles.affiches)}</span>
           <span className="tuile__detail">
             <i style={{ background: COULEUR_ELECTRO }} /> {nombre(cles.affElectro)} Electro
-            <i style={{ background: COULEUR_NT }} /> {nombre(cles.affNt)} Image &amp; Son
+            <i style={{ background: COULEUR_NT }} /> {nombre(cles.affNt)} NT / Image &amp; Son
           </span>
         </div>
         <div className="tuile">

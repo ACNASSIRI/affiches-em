@@ -242,7 +242,7 @@ export function Impression() {
             value={choixGabarit}
             onChange={(e) => void choisirGabarit(e.target.value)}
           >
-            <option value="auto">Automatique : Electro ou Image &amp; Son selon l&apos;article</option>
+            <option value="auto">Automatique : Electro, Nouvelles technologies ou Image &amp; Son selon l&apos;article</option>
             {GABARITS_ORDONNES.map((g) => (
               <option key={g} value={g}>
                 {GABARITS[g].libelle} — toutes les affiches

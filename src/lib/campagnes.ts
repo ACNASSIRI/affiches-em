@@ -20,7 +20,7 @@ export interface Campagne {
   readonly createdBy: string;
   readonly creeeLe: string;
   /**
-   * Gabarit impose a toute la campagne (« electro », « nouvelles-technologies »
+   * Gabarit impose a toute la campagne (« electro », « nouvelles-technologies », « image-son »
    * ou « op:<id> »), ou null pour le choix automatique selon la categorie.
    */
   readonly gabarit: string | null;
