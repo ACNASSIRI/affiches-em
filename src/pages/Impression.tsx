@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, useParams } from 'react-router-dom';
 import { AppShell } from '../components/AppShell';
@@ -28,6 +28,7 @@ import {
 } from '../lib/gabarits-operation';
 import './Impression.css';
 import { tracer } from '../lib/journal';
+import { nomFichierPdf, telechargerPdf } from '../lib/export-pdf';
 
 
 interface PlancheCalculee {
@@ -172,6 +173,42 @@ export function Impression() {
     [donnees],
   );
 
+  const zoneImpression = useRef<HTMLDivElement>(null);
+  const [pdf, setPdf] = useState<string | null>(null);
+
+  async function marquerImprimee() {
+    if (campagne && campagne.statut === 'validee') {
+      try {
+        setCampagne(await changerStatutCampagne(campagne.id, 'imprimee'));
+      } catch {
+        /* le statut est secondaire */
+      }
+    }
+  }
+
+  async function telecharger() {
+    const zone = zoneImpression.current;
+    if (!zone) return;
+    setPdf('Preparation…');
+    try {
+      await attendreRenduComplet();
+      const feuilles = Array.from(zone.children).filter((e): e is HTMLElement => e instanceof HTMLElement);
+      await telechargerPdf(
+        feuilles,
+        nomFichierPdf(campagne ? `Affiches ${campagne.nom}` : 'Affiches'),
+        (faites, total) => setPdf(`PDF ${faites}/${total}…`),
+      );
+      if (campagne) {
+        tracer('export', 'impression', `Telechargement PDF : campagne « ${campagne.nom} » — ${donnees.length} affiche(s) sur ${planches.length} feuille(s) A4`);
+      }
+      await marquerImprimee();
+    } catch (e) {
+      setErreur(`Le PDF n'a pas pu etre cree : ${e instanceof Error ? e.message : String(e)}. Utilisez « Imprimer / PDF » en attendant.`);
+    } finally {
+      setPdf(null);
+    }
+  }
+
   async function imprimer() {
     setPreparation(true);
     try {
@@ -212,11 +249,19 @@ export function Impression() {
           ) : null}
           <button
             type="button"
-            className="bouton bouton--principal"
+            className="bouton bouton--discret"
             onClick={() => void imprimer()}
-            disabled={chargement || preparation || planches.length === 0}
+            disabled={chargement || preparation || pdf !== null || planches.length === 0}
           >
-            {preparation ? 'Preparation…' : 'Imprimer / PDF'}
+            {preparation ? 'Preparation…' : 'Imprimer'}
+          </button>
+          <button
+            type="button"
+            className="bouton bouton--principal"
+            onClick={() => void telecharger()}
+            disabled={chargement || preparation || pdf !== null || planches.length === 0}
+          >
+            {pdf ?? 'Telecharger le PDF'}
           </button>
         </>
       }
@@ -315,7 +360,7 @@ export function Impression() {
           de l'application (enfant direct de <body>) pour que les sauts de page
           ne soient pas neutralises par la mise en page de l'ecran. */}
       {createPortal(
-        <div className="zone-impression" aria-hidden="true">
+        <div className="zone-impression" aria-hidden="true" ref={zoneImpression}>
           {planches.map((planche) => (
             <Planche key={planche.cle} format={planche.format} affiches={planche.affiches} />
           ))}
